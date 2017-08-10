@@ -1,22 +1,28 @@
-<?php
+<?php 
+
+$para = 'cristhianriano@gmail.com'; 
+
+
+$nombre = $email = $asunto = $mensaje = $ip ;
+
+
 $nombre = $_POST['name'];
-$mail = $_POST['email'];
-$empresa = $_POST['message'];
+$mensaje = $_POST['message'];
+$email = $_POST['email'];
 
-$header = 'From: ' . $mail . " \r\n";
-$header .= "X-Mailer: PHP/" . phpversion() . " \r\n";
-$header .= "Mime-Version: 1.0 \r\n";
-$header .= "Content-Type: text/plain";
+$mailheader = "From: ".$_POST["email"]."\r\n"; 
+$mailheader .= "Reply-To: ".$_POST["email"]."\r\n"; 
+$mailheader .= "Content-type: text/html; charset=utf-8\r\n"; 
 
-$mensaje = "Este mensaje fue enviado por " . $nombre . ",\r\n";
-$mensaje .= "Su e-mail es: " . $mail . " \r\n";
-$mensaje .= "Mensaje: " . $_POST['message'] . " \r\n";
-$mensaje .= "Enviado el " . date('d/m/Y', time());
+$MESSAGE_BODY = "Nombre: ".$_POST["name"]."<br>";
+$MESSAGE_BODY .= "Email: ".$_POST["email"]."<br>";
+$MESSAGE_BODY .= "Mensaje: ".$_POST["message"]."<br>"; 
+$MESSAGE_BODY .= "ip: ".$_SERVER['REMOTE_ADDR']."<br>"; 
 
-$para = 'cristhianriano@gmail.com';
-$asunto = 'Mensaje de riañotoloza.com';
-
-mail($para, $asunto, utf8_decode($mensaje), $header);
+mail($para, $nombre, $MESSAGE_BODY, $mailheader, $ip) or die ("Error al enviar el Formulario !"); 
 
 header("Location:index.html");
+
+$ip = $_SERVER['REMOTE_ADDR'];
+
 ?>
